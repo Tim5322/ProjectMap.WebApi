@@ -71,7 +71,7 @@ public class ProfielKeuzeController : ControllerBase
         return Ok();
     }
 
-    [Authorize]
+    [Authorize(Policy = "profielKeuzeId")]      
     [ApiController]
     [Route("[controller]")]
     public class WizardController : ControllerBase

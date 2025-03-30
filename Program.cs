@@ -1,4 +1,4 @@
-//todo: Claims bij builder.Services.AddAuthorization veranderen
+//todo: Claims bij builder.Services.AddAuthorization
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -22,10 +22,10 @@ var sqlConnectionStringFound = !string.IsNullOrWhiteSpace(sqlConnectionString);
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("Level8WizardOnly", policy =>
+    options.AddPolicy("profielKeuzeId", policy =>
     {
-        policy.RequireClaim("wizard");
-        policy.RequireClaim("wizardLevel", "8");
+        policy.RequireClaim("Profiel");
+        policy.RequireClaim("Profielkeuze", "8"); //Ik weet niet wat ik in de positie van die 8 moet zetten.
     });
 });
 

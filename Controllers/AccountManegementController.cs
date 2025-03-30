@@ -27,7 +27,7 @@ public class AccountManagementController : ControllerBase
         _roleManager = roleManager;
     }
 
-    // Endpoint om een claim toe te voegen aan een gebruiker
+    // ✅ Endpoint om een claim toe te voegen aan een gebruiker
     [HttpPost("add-claim")]
     public async Task<IActionResult> AddClaimToUser([FromBody] ClaimRequestModel model)
     {
@@ -43,9 +43,38 @@ public class AccountManagementController : ControllerBase
 
         return Ok(new { message = "Claim toegevoegd!" });
     }
+
+    // ✅ Endpoint om claims van een gebruiker op te halen
+    [HttpGet("get-claims/{email}")]
+    public async Task<IActionResult> GetUserClaims(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null)
+            return NotFound(new { message = "Gebruiker niet gevonden" });
+
+        var claims = await _userManager.GetClaimsAsync(user);
+        return Ok(claims);
+    }
+
+    // ✅ Endpoint om een claim te verwijderen
+    [HttpPost("remove-claim")]
+    public async Task<IActionResult> RemoveClaimFromUser([FromBody] ClaimRequestModel model)
+    {
+        var user = await _userManager.FindByEmailAsync(model.Email);
+        if (user == null)
+            return NotFound(new { message = "Gebruiker niet gevonden" });
+
+        var claim = new Claim(model.ClaimType, model.ClaimValue);
+        var result = await _userManager.RemoveClaimAsync(user, claim);
+
+        if (!result.Succeeded)
+            return BadRequest(result.Errors);
+
+        return Ok(new { message = "Claim verwijderd!" });
+    }
 }
 
-// Model voor de API-call
+// ✅ Model voor de API requests
 public class ClaimRequestModel
 {
     public string Email { get; set; }
