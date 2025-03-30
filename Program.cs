@@ -1,3 +1,5 @@
+//todo: Claims bij builder.Services.AddAuthorization veranderen
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Identity.Client;
@@ -18,7 +20,15 @@ var sqlConnectionStringFound = !string.IsNullOrWhiteSpace(sqlConnectionString);
 //builder.Services.AddTransient<Object2DRepository, Object2DRepository>(o => new Object2DRepository(sqlConnectionString));
 //builder.Services.AddTransient<Environment2DRepository, Environment2DRepository>(o => new Environment2DRepository(sqlConnectionString));
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Level8WizardOnly", policy =>
+    {
+        policy.RequireClaim("wizard");
+        policy.RequireClaim("wizardLevel", "8");
+    });
+});
+
 builder.Services
     .AddIdentityApiEndpoints<IdentityUser>()
     .AddDapperStores(options =>

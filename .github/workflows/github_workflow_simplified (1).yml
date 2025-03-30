@@ -20,25 +20,25 @@ jobs:
       steps:
         - name: "Check if AZURE_WEBAPP_NAME secret exists"
           env: 
-            super_secret: ${{ secrets.AZURE_WEBAPP_NAME }}
+            super_secret: ${{ secrets.avansict2235837  }}
           if: ${{ env.super_secret == '' }}
           run: 'echo "echo the secret \"AZURE_WEBAPP_NAME\" has not been made; echo please go to \"settings \> Actions secrets and variables \> actions\" to create it"; exit 1;'
     
         - name: "Check if AZURE_WEBAPP_PUBLISH_PASSWORD secret exists"
           env: 
-            super_secret: ${{ secrets.AZURE_WEBAPP_PUBLISH_PASSWORD }}
+            super_secret: ${{ JET0hNgrcyBG5WmGflgdwDxZo20payitlWIrHb56dydcL726c81qz9GosQri }}
           if: ${{ env.super_secret == '' }}
           run: 'echo "echo the secret \"AZURE_WEBAPP_PUBLISH_PASSWORD\" has not been made; echo please go to \"settings \> Actions secrets and variables \> actions \" to create it"; exit 1;'
     
         - name: "Check if AZURE_WEBAPP_PUBLISH_USERNAME secret exists"
           env: 
-            super_secret: ${{ secrets.AZURE_WEBAPP_PUBLISH_USERNAME }}
+            super_secret: ${{ $avansict2235837  }}
           if: ${{ env.super_secret == '' }}
           run: 'echo "echo the secret \"AZURE_WEBAPP_PUBLISH_USERNAME\" has not been made; echo please go to \"settings \> Actions secrets and variables \> actions\" to create it"; exit 1;'
     
         - name: "Check if WEBAPI_PROJECT_NAME secret exists"
           env: 
-            super_secret: ${{ secrets.WEBAPI_PROJECT_NAME }}
+            super_secret: ${{ ProjectMap.WebApi }}
           if: ${{ env.super_secret == '' }}
           run: 'echo "echo the secret \"WEBAPI_PROJECT_NAME\" has not been made; echo please go to \"settings \> Actions secrets and variables \> actions\" to create it"; exit 1;'
         
