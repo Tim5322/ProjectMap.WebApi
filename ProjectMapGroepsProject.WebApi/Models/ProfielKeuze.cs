@@ -21,6 +21,6 @@ namespace ProjectMap.WebApi.Models
         public Guid UserId { get; set; }
 
         [ForeignKey("UserId")]
-        public User User { get; set; } // Navigatie-eigenschap
+        public string? User { get; set; } // Navigatie-eigenschap
     }
 }
