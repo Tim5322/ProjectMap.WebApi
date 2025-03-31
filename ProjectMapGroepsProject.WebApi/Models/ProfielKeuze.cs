@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjectMap.WebApi.Models
 {
@@ -14,5 +15,12 @@ namespace ProjectMap.WebApi.Models
 
         [Range(0, 120)]
         public int Leeftijd { get; set; }
+
+        public string? Arts { get; set; }
+
+        public Guid UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public User User { get; set; } // Navigatie-eigenschap
     }
 }
