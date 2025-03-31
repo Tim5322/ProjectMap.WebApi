@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjectMap.WebApi.Models;
 using ProjectMap.WebApi.Repositories;
@@ -68,5 +69,24 @@ public class ProfielKeuzeController : ControllerBase
         await _profielKeuzeRepository.DeleteAsync(profielKeuzeId);
 
         return Ok();
+    }
+
+    [Authorize(Policy = "profielKeuzeId")]      
+    [ApiController]
+    [Route("[controller]")]
+    public class WizardController : ControllerBase
+    {
+        private readonly ILogger<WizardController> _logger;
+
+        public WizardController(ILogger<WizardController> logger)
+        {
+            _logger = logger;
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetWizard(int id)
+        {
+            return Ok($"Wizard {id} retrieved.");
+        }
     }
 }

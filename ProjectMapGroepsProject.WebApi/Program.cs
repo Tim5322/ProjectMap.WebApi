@@ -1,3 +1,5 @@
+//todo: Claims bij builder.Services.AddAuthorization
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Identity.Client;
@@ -18,7 +20,15 @@ var sqlConnectionStringFound = !string.IsNullOrWhiteSpace(sqlConnectionString);
 //builder.Services.AddTransient<Object2DRepository, Object2DRepository>(o => new Object2DRepository(sqlConnectionString));
 //builder.Services.AddTransient<Environment2DRepository, Environment2DRepository>(o => new Environment2DRepository(sqlConnectionString));
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("profielKeuzeId", policy =>
+    {
+        policy.RequireClaim("Profiel");
+        policy.RequireClaim("Profielkeuze", "8"); //Ik weet niet wat ik in de positie van die 8 moet zetten.
+    });
+});
+
 builder.Services
     .AddIdentityApiEndpoints<IdentityUser>()
     .AddDapperStores(options =>
@@ -42,3 +52,5 @@ app.MapGroup("/account")
 app.MapControllers().RequireAuthorization();
 
 app.Run();
+
+
