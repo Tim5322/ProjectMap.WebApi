@@ -36,10 +36,15 @@ builder.Services
         options.ConnectionString = sqlConnectionString;
     });
 
+// Adding the HTTP Context accessor to be injected. This is needed by the AspNetIdentityUserRepository
+// to resolve the current user.
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<IAuthenticationService, AspNetIdentityAuthenticationService>();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.|
-app.MapGet("/", () => $"The API is up . Connection string found: {(sqlConnectionStringFound ? "" : "")}");
+// Configure the HTTP request pipeline.
+app.MapGet("/", () => $"The API is up. Connection string found: {(sqlConnectionStringFound ? "Yes" : "No")}");
 
 app.MapOpenApi();
 
@@ -52,5 +57,6 @@ app.MapGroup("/account")
 app.MapControllers().RequireAuthorization();
 
 app.Run();
+
 
 
