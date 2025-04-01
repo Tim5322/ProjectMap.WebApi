@@ -6,4 +6,3 @@
     /// <returns></returns>
     string? GetCurrentAuthenticatedUserId();
 }
-}
