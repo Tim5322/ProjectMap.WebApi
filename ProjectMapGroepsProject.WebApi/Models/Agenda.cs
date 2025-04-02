@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using ProjectMap.WebApi.Models;
 
 namespace ProjectMapGroepsproject.WebApi.Models
 {
@@ -25,6 +26,6 @@ namespace ProjectMapGroepsproject.WebApi.Models
         [StringLength(50)]
         public string location3 { get; set; }
 
-        public Guid UserId { get; set; }
+        public ProfielKeuze? ProfielKeuze { get; set; }
     }
 }

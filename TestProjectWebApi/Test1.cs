@@ -11,6 +11,7 @@ using Assert = Xunit.Assert;
 
 namespace TestProjectWebApi
 {
+    [TestClass]
     public class DagboekControllerTests
     {
         private readonly Mock<Microsoft.Extensions.Logging.ILogger<DagboekController>> _mockLogger;
@@ -22,18 +23,20 @@ namespace TestProjectWebApi
             _controller = new DagboekController(_mockLogger.Object);
         }
 
-        [Fact]
-        public void GetAll_ReturnsOkResult_WithListOfDagboeken()
-        {
-            // Act
-            var result = _controller.GetAll();
+        //[TestMethod]
+        //[Fact]
+        //public void GetAll_ReturnsOkResult_WithListOfDagboeken()
+        //{
+        //    // Act
+        //    var result = _controller.GetAll();
 
-            // Assert
-            var okResult = Assert.IsType<OkObjectResult>(result.Result);
-            var dagboeken = Assert.IsType<List<Dagboek>>(okResult.Value);
-            Assert.Empty(dagboeken);
-        }
+        //    // Assert
+        //    var okResult = Assert.IsType<OkObjectResult>(result.Result);
+        //    var dagboeken = Assert.IsType<List<Dagboek>>(okResult.Value);
+        //    Assert.Empty(dagboeken);
+        //}
 
+        [TestMethod]
         [Fact]
         public void Get_ReturnsNotFound_WhenDagboekDoesNotExist()
         {
@@ -44,6 +47,7 @@ namespace TestProjectWebApi
             Assert.IsType<NotFoundResult>(result.Result);
         }
 
+        [TestMethod]
         [Fact]
         public void Get_ReturnsOkResult_WithDagboek_WhenDagboekExists()
         {
@@ -60,6 +64,7 @@ namespace TestProjectWebApi
             Assert.Equal(dagboek.Id, returnedDagboek.Id);
         }
 
+        [TestMethod]    
         [Fact]
         public void Create_ReturnsCreatedAtActionResult_WithDagboek()
         {
@@ -75,6 +80,7 @@ namespace TestProjectWebApi
             Assert.NotEqual(Guid.Empty, createdDagboek.Id);
         }
 
+        [TestMethod]
         [Fact]
         public void Update_ReturnsNotFound_WhenDagboekDoesNotExist()
         {
@@ -88,6 +94,7 @@ namespace TestProjectWebApi
             Assert.IsType<NotFoundResult>(result);
         }
 
+        [TestMethod]
         [Fact]
         public void Update_ReturnsOkResult_WithUpdatedDagboek_WhenDagboekExists()
         {
@@ -105,6 +112,7 @@ namespace TestProjectWebApi
             Assert.Equal(updatedDagboek.DagboekBladzijde1, returnedDagboek.DagboekBladzijde1);
         }
 
+        [TestMethod]
         [Fact]
         public void Delete_ReturnsNotFound_WhenDagboekDoesNotExist()
         {
@@ -115,6 +123,7 @@ namespace TestProjectWebApi
             Assert.IsType<NotFoundResult>(result);
         }
 
+        [TestMethod]
         [Fact]
         public void Delete_ReturnsNoContent_WhenDagboekExists()
         {

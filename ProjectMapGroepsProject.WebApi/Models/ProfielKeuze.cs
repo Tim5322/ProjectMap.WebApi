@@ -13,14 +13,14 @@ namespace ProjectMap.WebApi.Models
         [StringLength(50)]
         public string? Name { get; set; }
 
+        [Required]
         public string? Arts { get; set; }
 
         [Required]
-        [StringLength(100)]
-        public string? NaamKind { get; set; }
+        public DateTime GeboorteDatum { get; set; }
 
         [Required]
-        public DateTime GeboorteDatum { get; set; }
+        public string? Avatar { get; set; }
 
         [ForeignKey("UserId")]
         public Guid UserId { get; set; } // Navigatie-eigenschap
