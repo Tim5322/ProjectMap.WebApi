@@ -40,6 +40,9 @@ builder.Services
 // to resolve the current user.
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<IAuthenticationService, AspNetIdentityAuthenticationService>();
+builder.Services.AddTransient<IProfielKeuzeRepository, ProfielKeuzeRepository>(o => new ProfielKeuzeRepository(sqlConnectionString));
+builder.Services.AddTransient<IDagboekRepository, DagboekRepository>(o => new DagboekRepository(sqlConnectionString));
+builder.Services.AddTransient<IAgendaRepository, AgendaRepository>(o => new AgendaRepository(sqlConnectionString));
 
 var app = builder.Build();
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjectMap.WebApi.Repositories
 {
-    public class AgendaRepository
+    public class AgendaRepository : IAgendaRepository
     {
         private readonly string _sqlConnectionString;
 
