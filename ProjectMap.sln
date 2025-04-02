@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectMapGroepsproject.WebApi", "ProjectMapGroepsProject.WebApi\ProjectMapGroepsproject.WebApi.csproj", "{41601BE3-88B4-429D-BF97-00ADB29853AE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjectWebApi", "TestProjectWebApi\TestProjectWebApi.csproj", "{22BC1223-2D31-4700-837F-D1938196184F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{41601BE3-88B4-429D-BF97-00ADB29853AE} = {41601BE3-88B4-429D-BF97-00ADB29853AE}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +27,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {090294D8-B451-43A2-A0C2-23FB48DF12F3}
 	EndGlobalSection
 EndGlobal
