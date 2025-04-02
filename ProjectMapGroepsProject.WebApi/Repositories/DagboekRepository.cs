@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProjectMap.WebApi.Repositories
 {
-    public class DagboekRepository : IDagboekRepository
+    public class DagboekRepository
     {
         private readonly string _sqlConnectionString;
 

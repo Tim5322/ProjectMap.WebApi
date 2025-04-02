@@ -17,6 +17,9 @@ builder.Services.Configure<RouteOptions>(o => o.LowercaseUrls = true);
 var sqlConnectionString = builder.Configuration.GetValue<string>("SqlConnectionString");
 var sqlConnectionStringFound = !string.IsNullOrWhiteSpace(sqlConnectionString);
 
+//builder.Services.AddTransient<Object2DRepository, Object2DRepository>(o => new Object2DRepository(sqlConnectionString));
+//builder.Services.AddTransient<Environment2DRepository, Environment2DRepository>(o => new Environment2DRepository(sqlConnectionString));
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("profielKeuzeId", policy =>
@@ -37,9 +40,6 @@ builder.Services
 // to resolve the current user.
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<IAuthenticationService, AspNetIdentityAuthenticationService>();
-builder.Services.AddTransient<IProfielKeuzeRepository, ProfielKeuzeRepository>(o => new ProfielKeuzeRepository(sqlConnectionString));
-builder.Services.AddTransient<IDagboekRepository, DagboekRepository>(o => new DagboekRepository(sqlConnectionString));
-builder.Services.AddTransient<IAgendaRepository, AgendaRepository>(o => new AgendaRepository(sqlConnectionString));
 
 var app = builder.Build();
 

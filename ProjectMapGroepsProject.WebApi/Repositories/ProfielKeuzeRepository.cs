@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjectMap.WebApi.Repositories
 {
-    public class ProfielKeuzeRepository : IProfielKeuzeRepository
+    public class ProfielKeuzeRepository
     {
         private readonly string _connectionString;
 
