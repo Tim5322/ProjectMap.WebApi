@@ -13,11 +13,11 @@ namespace ProjectMap.WebApi.Controllers
     [Route("ProfielKeuzes")]
     public class ProfielKeuzeController : ControllerBase
     {
-        private readonly ProfielKeuzeRepository _profielKeuzeRepository;
+        private readonly IProfielKeuzeRepository _profielKeuzeRepository;
         private readonly ILogger<ProfielKeuzeController> _logger;
         private readonly IAuthenticationService _authenticationService;
 
-        public ProfielKeuzeController(ProfielKeuzeRepository profielKeuzeRepository, ILogger<ProfielKeuzeController> logger, IAuthenticationService authenticationService)
+        public ProfielKeuzeController(IProfielKeuzeRepository profielKeuzeRepository, ILogger<ProfielKeuzeController> logger, IAuthenticationService authenticationService)
         {
             _profielKeuzeRepository = profielKeuzeRepository;
             _logger = logger;
