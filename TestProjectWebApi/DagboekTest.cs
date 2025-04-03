@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.Testing.Platform.Logging;
 using Moq;
 using ProjectMap.WebApi.Controllers; // Ensure this matches the actual namespace
 using ProjectMapGroepsproject.WebApi.Models;
-using System;
-using System.Collections.Generic;
 using Xunit;
 using Assert = Xunit.Assert;
 
@@ -64,7 +60,7 @@ namespace TestProjectWebApi
             Assert.Equal(dagboek.Id, returnedDagboek.Id);
         }
 
-        [TestMethod]    
+        [TestMethod]
         [Fact]
         public void Create_ReturnsCreatedAtActionResult_WithDagboek()
         {
