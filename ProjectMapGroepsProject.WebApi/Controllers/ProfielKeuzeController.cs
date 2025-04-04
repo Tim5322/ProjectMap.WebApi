@@ -63,7 +63,7 @@ namespace ProjectMap.WebApi.Controllers
             }
 
             profielKeuze.Id = Guid.NewGuid();
-            profielKeuze.UserId = Guid.Parse(userId);
+            profielKeuze.UserId = Guid.Parse(userId); // UserId wordt hier ingesteld
             var createdProfielKeuze = await _profielKeuzeRepository.InsertAsync(profielKeuze);
             return CreatedAtRoute("ReadProfielKeuze", new { profielKeuzeId = createdProfielKeuze.Id }, createdProfielKeuze);
         }
@@ -95,4 +95,6 @@ namespace ProjectMap.WebApi.Controllers
         }
     }
 }
+
+
 
