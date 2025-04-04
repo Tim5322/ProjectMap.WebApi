@@ -12,21 +12,13 @@ namespace ProjectMap.WebApi.Controllers
     [Route("api/agenda")]
     public class AgendaController : ControllerBase
     {
-        private readonly AgendaRepository _repository;
+        private readonly IAgendaRepository _repository;
         private readonly ILogger<AgendaController> _logger;
-        private IAgendaRepository object1;
-        private ILogger<AgendaController> object2;
 
-        public AgendaController(AgendaRepository repository, ILogger<AgendaController> logger)
+        public AgendaController(IAgendaRepository repository, ILogger<AgendaController> logger)
         {
             _repository = repository;
             _logger = logger;
-        }
-
-        public AgendaController(IAgendaRepository object1, ILogger<AgendaController> object2)
-        {
-            this.object1 = object1;
-            this.object2 = object2;
         }
 
         [HttpGet]
@@ -47,11 +39,28 @@ namespace ProjectMap.WebApi.Controllers
             return Ok(agenda);
         }
 
+        [HttpGet("profielkeuze/{profielKeuzeId}")]
+        public async Task<ActionResult<IEnumerable<Agenda>>> GetByProfielKeuzeId(Guid profielKeuzeId)
+        {
+            var agendaItems = await _repository.ReadByProfielKeuzeIdAsync(profielKeuzeId);
+            return Ok(agendaItems);
+        }
+
         [HttpPost]
         public async Task<ActionResult<Agenda>> Create([FromBody] Agenda agenda)
         {
-            var createdAgenda = await _repository.InsertAsync(agenda);
-            return CreatedAtAction(nameof(Get), new { id = createdAgenda.Id }, createdAgenda);
+            _logger.LogInformation("Creating a new agenda with ProfielKeuzeId: {ProfielKeuzeId}", agenda.ProfielKeuzeId);
+
+            try
+            {
+                var createdAgenda = await _repository.InsertAsync(agenda);
+                return CreatedAtAction(nameof(Get), new { id = createdAgenda.Id }, createdAgenda);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while creating the agenda");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPut("{id}")]
