@@ -23,7 +23,7 @@ namespace ProjectMapGroepsProject.WebApi.Tests.Controllers
         {
             _mockRepository = new Mock<IAgendaRepository>();
             _mockLogger = new Mock<ILogger<AgendaController>>();
-            _controller = new AgendaController(_m ockRepository.Object, _mockLogger.Object);
+            _controller = new AgendaController(_mockRepository.Object, _mockLogger.Object);
         }
         [TestMethod]
         [Fact]
