@@ -23,8 +23,8 @@ namespace ProjectMap.WebApi.Repositories
             {
                 dagboek.Id = Guid.NewGuid();
                 await sqlConnection.ExecuteAsync(
-                    "INSERT INTO [Dagboek] (Id, DagboekBladzijde1, DagboekBladzijde2, DagboekBladzijde3, DagboekBladzijde4) " +
-                    "VALUES (@Id, @DagboekBladzijde1, @DagboekBladzijde2, @DagboekBladzijde3, @DagboekBladzijde4)", dagboek);
+                    "INSERT INTO [Dagboek] (Id, DagboekBladzijde1, DagboekBladzijde2, DagboekBladzijde3, DagboekBladzijde4, ProfielKeuzeId) " +
+                    "VALUES (@Id, @DagboekBladzijde1, @DagboekBladzijde2, @DagboekBladzijde3, @DagboekBladzijde4, @ProfielKeuzeId)", dagboek);
                 return dagboek;
             }
         }
@@ -46,6 +46,15 @@ namespace ProjectMap.WebApi.Repositories
             }
         }
 
+        public async Task<IEnumerable<Dagboek>> ReadByProfielKeuzeIdAsync(Guid profielKeuzeId)
+        {
+            using (var sqlConnection = new SqlConnection(_sqlConnectionString))
+            {
+                return await sqlConnection.QueryAsync<Dagboek>(
+                    "SELECT * FROM [Dagboek] WHERE ProfielKeuzeId = @ProfielKeuzeId", new { profielKeuzeId });
+            }
+        }
+
         public async Task UpdateAsync(Dagboek dagboek)
         {
             using (var sqlConnection = new SqlConnection(_sqlConnectionString))
@@ -55,7 +64,8 @@ namespace ProjectMap.WebApi.Repositories
                     "DagboekBladzijde1 = @DagboekBladzijde1, " +
                     "DagboekBladzijde2 = @DagboekBladzijde2, " +
                     "DagboekBladzijde3 = @DagboekBladzijde3, " +
-                    "DagboekBladzijde4 = @DagboekBladzijde4 " +
+                    "DagboekBladzijde4 = @DagboekBladzijde4, " +
+                    "ProfielKeuzeId = @ProfielKeuzeId " +
                     "WHERE Id = @Id", dagboek);
             }
         }

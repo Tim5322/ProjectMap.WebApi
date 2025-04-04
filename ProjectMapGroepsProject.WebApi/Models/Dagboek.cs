@@ -20,7 +20,7 @@ namespace ProjectMapGroepsproject.WebApi.Models
         [StringLength(250)]
         public string? DagboekBladzijde4 { get; set; }
 
-        public ProfielKeuze? ProfielKeuze { get; set; }
+        public Guid ProfielKeuzeId { get; set; } // Foreign key to Profielkeuze
 
     }
 }

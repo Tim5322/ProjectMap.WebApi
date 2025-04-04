@@ -27,6 +27,5 @@ namespace ProjectMapGroepsproject.WebApi.Models
         public string location3 { get; set; }
 
         public Guid ProfielKeuzeId { get; set; } // Foreign key to ProfielKeuze
-        public ProfielKeuze? ProfielKeuze { get; set; }
     }
 }

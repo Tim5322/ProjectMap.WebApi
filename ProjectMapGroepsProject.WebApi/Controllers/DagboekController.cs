@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProjectMapGroepsproject.WebApi.Models;
+using ProjectMap.WebApi.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,65 +9,85 @@ using System.Threading.Tasks;
 namespace ProjectMap.WebApi.Controllers
 {
     [ApiController]
-    [Route("dagboeken")]
+    [Route("api/dagboeken")]
     public class DagboekController : ControllerBase
     {
-        private static readonly Dictionary<Guid, Dagboek> _dagboeken = new();
+        private readonly IDagboekRepository _repository;
         private readonly ILogger<DagboekController> _logger;
 
-        public DagboekController(ILogger<DagboekController> logger)
+        public DagboekController(IDagboekRepository repository, ILogger<DagboekController> logger)
         {
+            _repository = repository;
             _logger = logger;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Dagboek>> GetAll()
+        public async Task<ActionResult<IEnumerable<Dagboek>>> GetAll()
         {
-            return Ok(_dagboeken.Values);
+            var dagboekItems = await _repository.ReadAsync();
+            return Ok(dagboekItems);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Dagboek> Get(Guid id)
+        public async Task<ActionResult<Dagboek>> Get(Guid id)
         {
-            if (!_dagboeken.TryGetValue(id, out var dagboek))
+            var dagboek = await _repository.ReadAsync(id);
+            if (dagboek == null)
             {
                 return NotFound();
             }
             return Ok(dagboek);
         }
 
-        [HttpPost]
-        public ActionResult<Dagboek> Create([FromBody] Dagboek dagboek)
+        [HttpGet("profielkeuze/{profielKeuzeId}")]
+        public async Task<ActionResult<IEnumerable<Dagboek>>> GetByProfielKeuzeId(Guid profielKeuzeId)
         {
-            var id = Guid.NewGuid();
-            dagboek.Id = id;
-            _dagboeken[id] = dagboek;
-            return CreatedAtAction(nameof(Get), new { id }, dagboek);
+            var dagboekItems = await _repository.ReadByProfielKeuzeIdAsync(profielKeuzeId);
+            return Ok(dagboekItems);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Dagboek>> Create([FromBody] Dagboek dagboek)
+        {
+            _logger.LogInformation("Creating a new dagboek with ProfielKeuzeId: {ProfielKeuzeId}", dagboek.ProfielKeuzeId);
+
+            try
+            {
+                var createdDagboek = await _repository.InsertAsync(dagboek);
+                return CreatedAtAction(nameof(Get), new { id = createdDagboek.Id }, createdDagboek);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while creating the dagboek");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(Guid id, [FromBody] Dagboek updatedDagboek)
+        public async Task<IActionResult> Update(Guid id, [FromBody] Dagboek updatedDagboek)
         {
-            if (!_dagboeken.ContainsKey(id))
+            var existingDagboek = await _repository.ReadAsync(id);
+            if (existingDagboek == null)
             {
                 return NotFound();
             }
+
             updatedDagboek.Id = id;
-            _dagboeken[id] = updatedDagboek;
-            return Ok(updatedDagboek);
+            await _repository.UpdateAsync(updatedDagboek);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            if (!_dagboeken.Remove(id))
+            var existingDagboek = await _repository.ReadAsync(id);
+            if (existingDagboek == null)
             {
                 return NotFound();
             }
+
+            await _repository.DeleteAsync(id);
             return NoContent();
         }
     }
 }
-
-
-
