@@ -48,7 +48,7 @@ namespace ProjectMap.WebApi.Controllers
         }
 
         [HttpPost(Name = "CreateProfielKeuze")]
-        public async Task<ActionResult> Add(ProfielKeuze profielKeuze)
+        public async Task<ActionResult> Add([FromBody]ProfielKeuze profielKeuze)
         {
             var userId = _authenticationService.GetCurrentAuthenticatedUserId();
             if (userId == null)
