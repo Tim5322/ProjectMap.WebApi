@@ -14,11 +14,19 @@ namespace ProjectMap.WebApi.Controllers
     {
         private readonly AgendaRepository _repository;
         private readonly ILogger<AgendaController> _logger;
+        private IAgendaRepository object1;
+        private ILogger<AgendaController> object2;
 
         public AgendaController(AgendaRepository repository, ILogger<AgendaController> logger)
         {
             _repository = repository;
             _logger = logger;
+        }
+
+        public AgendaController(IAgendaRepository object1, ILogger<AgendaController> object2)
+        {
+            this.object1 = object1;
+            this.object2 = object2;
         }
 
         [HttpGet]
