@@ -17,7 +17,7 @@ namespace ProjectMap.WebApi.Models
         public string? Arts { get; set; }
 
         [Required]
-        public DateTime? GeboorteDatum { get; set; }
+        public int? GeboorteDatum { get; set; }
 
         [Required]
         public string? Avatar { get; set; }
