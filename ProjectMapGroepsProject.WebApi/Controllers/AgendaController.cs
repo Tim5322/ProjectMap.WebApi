@@ -14,11 +14,13 @@ namespace ProjectMap.WebApi.Controllers
     {
         private readonly IAgendaRepository _repository;
         private readonly ILogger<AgendaController> _logger;
+        private readonly IProfielKeuzeRepository _profielKeuzeRepository;
 
-        public AgendaController(IAgendaRepository repository, ILogger<AgendaController> logger)
+        public AgendaController(IAgendaRepository repository, ILogger<AgendaController> logger, IProfielKeuzeRepository profielKeuzeRepository)
         {
             _repository = repository;
             _logger = logger;
+            _profielKeuzeRepository = profielKeuzeRepository;
         }
 
         [HttpGet]
@@ -53,6 +55,13 @@ namespace ProjectMap.WebApi.Controllers
 
             try
             {
+                var profielKeuze = await _profielKeuzeRepository.ReadAsync(agenda.ProfielKeuzeId);
+                if (profielKeuze == null)
+                {
+                    return BadRequest("Invalid ProfielKeuzeId.");
+                }
+
+                agenda.Id = Guid.NewGuid();
                 var createdAgenda = await _repository.InsertAsync(agenda);
                 return CreatedAtAction(nameof(Get), new { id = createdAgenda.Id }, createdAgenda);
             }

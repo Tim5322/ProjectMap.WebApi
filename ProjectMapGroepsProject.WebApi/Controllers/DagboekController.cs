@@ -14,11 +14,13 @@ namespace ProjectMap.WebApi.Controllers
     {
         private readonly IDagboekRepository _repository;
         private readonly ILogger<DagboekController> _logger;
+        private readonly IProfielKeuzeRepository _profielKeuzeRepository;
 
-        public DagboekController(IDagboekRepository repository, ILogger<DagboekController> logger)
+        public DagboekController(IDagboekRepository repository, ILogger<DagboekController> logger, IProfielKeuzeRepository profielKeuzeRepository)
         {
             _repository = repository;
             _logger = logger;
+            _profielKeuzeRepository = profielKeuzeRepository;
         }
 
         [HttpGet]
@@ -53,6 +55,13 @@ namespace ProjectMap.WebApi.Controllers
 
             try
             {
+                var profielKeuze = await _profielKeuzeRepository.ReadAsync(dagboek.ProfielKeuzeId);
+                if (profielKeuze == null)
+                {
+                    return BadRequest("Invalid ProfielKeuzeId.");
+                }
+
+                dagboek.Id = Guid.NewGuid();
                 var createdDagboek = await _repository.InsertAsync(dagboek);
                 return CreatedAtAction(nameof(Get), new { id = createdDagboek.Id }, createdDagboek);
             }
