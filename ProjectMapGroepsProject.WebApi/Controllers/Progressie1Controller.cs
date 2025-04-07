@@ -4,13 +4,12 @@ using ProjectMapGroepsproject.WebApi.Models;
 using ProjectMapGroepsproject.WebApi.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProjectMapGroepsproject.WebApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/progressie1")]
     public class Progressie1Controller : ControllerBase
     {
         private readonly IProgressie1Repository _progressie1Repository;
@@ -24,7 +23,7 @@ namespace ProjectMapGroepsproject.WebApi.Controllers
             _authenticationService = authenticationService;
         }
 
-        [HttpGet(Name = "GetAllProgressie1")]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<Progressie1>>> GetAll()
         {
             try
@@ -45,14 +44,16 @@ namespace ProjectMapGroepsproject.WebApi.Controllers
             }
         }
 
-        [HttpGet("{id}", Name = "GetProgressie1ById")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Progressie1>> Get(Guid id)
         {
             try
             {
                 var progressie = await _progressie1Repository.GetByIdAsync(id);
                 if (progressie == null)
+                {
                     return NotFound();
+                }
 
                 return Ok(progressie);
             }
@@ -63,14 +64,14 @@ namespace ProjectMapGroepsproject.WebApi.Controllers
             }
         }
 
-        [HttpPost(Name = "CreateProgressie1")]
-        public async Task<ActionResult> Create([FromBody] Progressie1 progressie)
+        [HttpPost]
+        public async Task<ActionResult<Progressie1>> Create([FromBody] Progressie1 progressie)
         {
             try
             {
                 progressie.Id = Guid.NewGuid(); // Set a new Guid for the Progressie1 record
                 var createdProgressie = await _progressie1Repository.CreateAsync(progressie);
-                return CreatedAtRoute("GetProgressie1ById", new { id = createdProgressie.Id }, createdProgressie);
+                return CreatedAtAction(nameof(Get), new { id = createdProgressie.Id }, createdProgressie);
             }
             catch (Exception ex)
             {
@@ -79,18 +80,20 @@ namespace ProjectMapGroepsproject.WebApi.Controllers
             }
         }
 
-        [HttpPut("{id}", Name = "UpdateProgressie1")]
-        public async Task<ActionResult> Update(Guid id, [FromBody] Progressie1 updatedProgressie)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] Progressie1 updatedProgressie)
         {
             try
             {
                 var existingProgressie = await _progressie1Repository.GetByIdAsync(id);
-
                 if (existingProgressie == null)
+                {
                     return NotFound();
+                }
 
+                updatedProgressie.Id = id;
                 await _progressie1Repository.UpdateAsync(id, updatedProgressie);
-                return Ok(updatedProgressie);
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -99,18 +102,19 @@ namespace ProjectMapGroepsproject.WebApi.Controllers
             }
         }
 
-        [HttpDelete("{id}", Name = "DeleteProgressie1")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             try
             {
                 var existingProgressie = await _progressie1Repository.GetByIdAsync(id);
-
                 if (existingProgressie == null)
+                {
                     return NotFound();
+                }
 
                 await _progressie1Repository.DeleteAsync(id);
-                return Ok();
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -120,3 +124,4 @@ namespace ProjectMapGroepsproject.WebApi.Controllers
         }
     }
 }
+

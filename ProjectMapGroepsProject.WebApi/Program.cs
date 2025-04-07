@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Identity.Client;
 using ProjectMap.WebApi.Repositories;
+using ProjectMapGroepsproject.WebApi.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ var sqlConnectionStringFound = !string.IsNullOrWhiteSpace(sqlConnectionString);
 builder.Services.AddTransient<IProfielKeuzeRepository, ProfielKeuzeRepository>(o => new ProfielKeuzeRepository(sqlConnectionString));
 builder.Services.AddTransient<IDagboekRepository, DagboekRepository>(o => new DagboekRepository(sqlConnectionString));
 builder.Services.AddTransient<IAgendaRepository, AgendaRepository>(o => new AgendaRepository(sqlConnectionString));
+builder.Services.AddTransient<IProgressie1Repository, Progressie1Repository>(o => new Progressie1Repository(sqlConnectionString));
 
 // Register other services
 builder.Services.AddAuthorization(options =>
