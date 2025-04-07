@@ -5,6 +5,7 @@ using ProjectMap.WebApi.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ProjectMap.WebApi.Models;
 
 namespace ProjectMap.WebApi.Controllers
 {
@@ -49,7 +50,6 @@ namespace ProjectMap.WebApi.Controllers
         }
 
         [HttpPost]
-        [HttpPost]
         public async Task<ActionResult<Dagboek>> Create([FromBody] Dagboek dagboek)
         {
             _logger.LogInformation("Creating a new dagboek with ProfielKeuzeId: {ProfielKeuzeId}", dagboek.ProfielKeuzeId);
@@ -76,7 +76,6 @@ namespace ProjectMap.WebApi.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] Dagboek updatedDagboek)
