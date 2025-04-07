@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using ProjectMap.WebApi.Models;
-using ProjectMapGroepsproject.WebApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -79,3 +78,4 @@ namespace ProjectMap.WebApi.Repositories
         }
     }
 }
+

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using ProjectMap.WebApi.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ProjectMapGroepsproject.WebApi.Models
+namespace ProjectMap.WebApi.Models
 {
     public class Dagboek
     {
+        [Key]
         public Guid Id { get; set; }
 
         [StringLength(250)]
@@ -20,7 +21,12 @@ namespace ProjectMapGroepsproject.WebApi.Models
         [StringLength(250)]
         public string? DagboekBladzijde4 { get; set; }
 
-        public Guid ProfielKeuzeId { get; set; } // Foreign key to Profielkeuze
+        [ForeignKey("ProfielKeuzeId")]
+        public Guid ProfielKeuzeId { get; set; } // Foreign key to ProfielKeuze
 
+        public ProfielKeuze? ProfielKeuze { get; set; } // Navigation property for ProfielKeuze
     }
 }
+
+
+

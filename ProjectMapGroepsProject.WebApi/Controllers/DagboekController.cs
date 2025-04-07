@@ -49,6 +49,7 @@ namespace ProjectMap.WebApi.Controllers
         }
 
         [HttpPost]
+        [HttpPost]
         public async Task<ActionResult<Dagboek>> Create([FromBody] Dagboek dagboek)
         {
             _logger.LogInformation("Creating a new dagboek with ProfielKeuzeId: {ProfielKeuzeId}", dagboek.ProfielKeuzeId);
@@ -62,6 +63,10 @@ namespace ProjectMap.WebApi.Controllers
                 }
 
                 dagboek.Id = Guid.NewGuid();
+                dagboek.DagboekBladzijde1 = "Page 1 content";
+                dagboek.DagboekBladzijde2 = "Page 2 content";
+                dagboek.DagboekBladzijde3 = "Page 3 content";
+                dagboek.DagboekBladzijde4 = "Page 4 content";
                 var createdDagboek = await _repository.InsertAsync(dagboek);
                 return CreatedAtAction(nameof(Get), new { id = createdDagboek.Id }, createdDagboek);
             }
@@ -71,6 +76,7 @@ namespace ProjectMap.WebApi.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] Dagboek updatedDagboek)

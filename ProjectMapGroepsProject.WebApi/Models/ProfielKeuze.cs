@@ -24,5 +24,8 @@ namespace ProjectMap.WebApi.Models
 
         [ForeignKey("UserId")]
         public Guid UserId { get; set; } // Navigatie-eigenschap
+
+        public Dagboek? Dagboek { get; set; } // Navigation property for Dagboek
     }
 }
+

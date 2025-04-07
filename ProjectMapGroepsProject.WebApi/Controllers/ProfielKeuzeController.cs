@@ -82,6 +82,19 @@ namespace ProjectMap.WebApi.Controllers
 
                 profielKeuze.Id = Guid.NewGuid();
                 profielKeuze.UserId = Guid.Parse(userId); // UserId wordt hier ingesteld
+
+                // Create a unique dagboek for the profielKeuze
+                var dagboek = new Dagboek
+                {
+                    Id = Guid.NewGuid(),
+                    ProfielKeuzeId = profielKeuze.Id,
+                    DagboekBladzijde1 = "Page 1 content",
+                    DagboekBladzijde2 = "Page 2 content",
+                    DagboekBladzijde3 = "Page 3 content",
+                    DagboekBladzijde4 = "Page 4 content"
+                };
+                profielKeuze.Dagboek = dagboek;
+
                 var createdProfielKeuze = await _profielKeuzeRepository.InsertAsync(profielKeuze);
                 return CreatedAtRoute("ReadProfielKeuze", new { profielKeuzeId = createdProfielKeuze.Id }, createdProfielKeuze);
             }
@@ -91,6 +104,7 @@ namespace ProjectMap.WebApi.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
 
         [HttpPut("{profielKeuzeId}", Name = "UpdateProfielKeuze")]
         public async Task<ActionResult> Update(Guid profielKeuzeId, ProfielKeuze newProfielKeuze)
