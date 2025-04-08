@@ -64,6 +64,26 @@ namespace ProjectMapGroepsproject.WebApi.Controllers
             }
         }
 
+        [HttpGet("profielkeuze/{profielKeuzeId}")]
+        public async Task<ActionResult<Progressie1>> GetByProfielKeuzeId(string profielKeuzeId)
+        {
+            try
+            {
+                var progressie = await _progressie1Repository.GetByProfielKeuzeIdAsync(profielKeuzeId);
+                if (progressie == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(progressie);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while getting Progressie1 record by ProfielKeuzeId.");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpPost]
         public async Task<ActionResult<Progressie1>> Create([FromBody] Progressie1 progressie)
         {
@@ -124,4 +144,5 @@ namespace ProjectMapGroepsproject.WebApi.Controllers
         }
     }
 }
+
 

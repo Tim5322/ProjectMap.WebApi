@@ -12,5 +12,6 @@ namespace ProjectMapGroepsproject.WebApi.Repositories
         Task<Progressie1> CreateAsync(Progressie1 progressie);
         Task<Progressie1?> UpdateAsync(Guid id, Progressie1 updatedProgressie);
         Task DeleteAsync(Guid id);
+        Task<Progressie1?> GetByProfielKeuzeIdAsync(string profielKeuzeId); // Add this method
     }
 }

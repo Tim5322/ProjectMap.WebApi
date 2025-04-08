@@ -64,6 +64,15 @@ namespace ProjectMapGroepsproject.WebApi.Repositories
             return updatedProgressie;
         }
 
+        // Haalt een Progressie1 record op via ProfielKeuzeId
+        public async Task<Progressie1?> GetByProfielKeuzeIdAsync(string profielKeuzeId)
+        {
+            using var connection = new SqlConnection(_connectionString);
+            var query = "SELECT * FROM Progressie1 WHERE ProfielKeuzeId = @ProfielKeuzeId";
+            return await connection.QuerySingleOrDefaultAsync<Progressie1>(query, new { ProfielKeuzeId = profielKeuzeId });
+        }
+
+
         // Verwijdert een Progressie1 record op basis van het Id
         public async Task DeleteAsync(Guid id)
         {
@@ -72,4 +81,5 @@ namespace ProjectMapGroepsproject.WebApi.Repositories
             await connection.ExecuteAsync(query, new { Id = id });
         }
     }
+
 }
