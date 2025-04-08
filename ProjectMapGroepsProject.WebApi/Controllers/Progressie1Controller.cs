@@ -64,13 +64,13 @@ namespace ProjectMapGroepsproject.WebApi.Controllers
         }
 
         [HttpPost(Name = "CreateProgressie1")]
-        public async Task<ActionResult> Create([FromBody] Progressie1 progressie)
+        public async Task<ActionResult<Progressie1>> Create([FromBody] Progressie1 progressie)
         {
             try
             {
                 progressie.Id = Guid.NewGuid(); // Set a new Guid for the Progressie1 record
                 var createdProgressie = await _progressie1Repository.CreateAsync(progressie);
-                return CreatedAtRoute("GetProgressie1ById", new { id = createdProgressie.Id }, createdProgressie);
+                return CreatedAtAction(nameof(Get), new { id = createdProgressie.Id }, createdProgressie);
             }
             catch (Exception ex)
             {
