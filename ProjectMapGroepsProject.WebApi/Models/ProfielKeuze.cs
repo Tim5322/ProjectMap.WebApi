@@ -16,11 +16,6 @@ namespace ProjectMap.WebApi.Models
         [Required]
         public string? Arts { get; set; }
 
-        [Required]
-        public int? GeboorteDatum { get; set; }
-
-        [Required]
-        public string? Avatar { get; set; }
 
         [ForeignKey("UserId")]
         public Guid UserId { get; set; } // Navigatie-eigenschap
