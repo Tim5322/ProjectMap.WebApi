@@ -13,10 +13,6 @@ namespace ProjectMap.WebApi.Models
         [StringLength(50)]
         public string? Name { get; set; }
 
-        [Required]
-        public string? Arts { get; set; }
-
-
         [ForeignKey("UserId")]
         public Guid UserId { get; set; } // Navigatie-eigenschap
     }
