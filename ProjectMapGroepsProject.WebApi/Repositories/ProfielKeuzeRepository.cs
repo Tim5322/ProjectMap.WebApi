@@ -26,7 +26,7 @@ namespace ProjectMap.WebApi.Repositories
         public async Task<ProfielKeuze> InsertAsync(ProfielKeuze profielKeuze)
         {
             using var connection = new SqlConnection(_connectionString);
-            var query = "INSERT INTO ProfielKeuze (Id, Name, Arts, GeboorteDatum, Avatar, UserId) VALUES (@Id, @Name, @Arts, @GeboorteDatum, @Avatar, @UserId)";
+            var query = "INSERT INTO ProfielKeuze (Id, Name, Avatar, UserId) VALUES (@Id, @Name, @Avatar, @UserId)";
             await connection.ExecuteAsync(query, profielKeuze);
             return profielKeuze;
         }
@@ -41,7 +41,7 @@ namespace ProjectMap.WebApi.Repositories
         public async Task UpdateAsync(ProfielKeuze profielKeuze)
         {
             using var connection = new SqlConnection(_connectionString);
-            var query = "UPDATE ProfielKeuze SET Name = @Name, Arts = @Arts, GeboorteDatum = @GeboorteDatum, Avatar = @Avatar WHERE Id = @Id";
+            var query = "UPDATE ProfielKeuze SET Name = @Name, Avatar = @Avatar WHERE Id = @Id";
             await connection.ExecuteAsync(query, profielKeuze);
         }
 
