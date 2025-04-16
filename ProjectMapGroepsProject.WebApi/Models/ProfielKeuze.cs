@@ -14,7 +14,7 @@ namespace ProjectMap.WebApi.Models
         public string? Name { get; set; }
 
         [Required]
-        public string? Arts { get; set; }
+        public string? Wereld { get; set; }
 
 
         [ForeignKey("UserId")]
